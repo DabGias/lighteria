@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { ProductList } from './src/screens/ProductList'
 import { ProductDetail } from './src/screens/ProductDetail'
-import { Header } from './src/components/Header'
 
 const Stack = createStackNavigator()
 
@@ -13,7 +12,6 @@ const App = () => {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
-        <Header/>
         <Stack.Navigator initialRouteName="ListaProdutos">
           <Stack.Screen
             name="ListaProdutos"
