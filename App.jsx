@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler'
 import React from 'react'
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { SafeAreaView } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { ProductList } from './src/screens/ProductList'
@@ -11,29 +11,22 @@ const Stack = createStackNavigator()
 const App = () => {
   return (
     <NavigationContainer>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Stack.Navigator initialRouteName="ListaProdutos">
           <Stack.Screen
             name="ListaProdutos"
             component={ProductList}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="DetalhesProduto"
+            name="DetalheProduto"
             component={ProductDetail}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </SafeAreaView>
     </NavigationContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'blue',
-  },
-})
 
 export default App
