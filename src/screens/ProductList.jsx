@@ -1,12 +1,16 @@
-import { Text, Pressable, StyleSheet, SafeAreaView, Image, FlatList, View } from "react-native"
+import { Text, Pressable, SafeAreaView, Image, FlatList } from "react-native"
 import { Header } from "../components/Header"
 import { useEffect, useState } from "react"
 
 function Item({ navigation, titulo, imagem, estudio, itemName, preco, itemDesc }) {
+    console.debug(imagem)
+
     return(
-        <Pressable style={{ flex: 1/2, padding: 15, margin: 10, backgroundColor: "#ddd", borderRadius: 15 }} onPress={() => { navigation.navigate("DetalheProduto") }}>
-            <Image src={imagem} style={{ resizeMode: "center", width: "100%", height: 150, marginBottom: 30 }}/>
+        <Pressable style={{ flex: 1/2, padding: 15, margin: 10, backgroundColor: "#ddd", borderRadius: 15 }} onPress={() => { navigation.navigate("DetalheProduto", { titulo, imagem, estudio, itemName, preco, itemDesc }) }}>
+            <Image source={{ uri: imagem }} style={{ width: 200, height: 200 }}/>
             <Text style={{ textAlign: "center" }}>{titulo}</Text>
+            <Text>{itemName}</Text>
+            <Text>{preco.toLocaleString('pt-br', { style: "currency", currency: 'BRL' })}</Text>
         </Pressable>
     )
 }
@@ -19,7 +23,7 @@ export const ProductList = ({ navigation }) => {
     }, [])
 
     async function getData() {
-        fetch("https://run.mocky.io/v3/6e1a79f0-968f-40de-992f-3d218ab1f249")
+        fetch("https://run.mocky.io/v3/8810362d-ffa4-4635-9180-dfefa47242f4")
         .then((resp) => resp.json())
         .then((json) => { setData(json) })
     }
@@ -30,7 +34,7 @@ export const ProductList = ({ navigation }) => {
             <FlatList 
                 data={data} 
                 keyExtractor={item => item.id} 
-                renderItem={({ item }) => <Item navigation={navigation} imagem={item.imagem} titulo={item.titulo}/>}
+                renderItem={({ item }) => <Item navigation={navigation} {...item}/>}
                 numColumns={2}    
             />
         </SafeAreaView>

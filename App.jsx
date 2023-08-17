@@ -21,7 +21,7 @@ const App = () => {
           <Stack.Screen
             name="DetalheProduto"
             component={ProductDetail}
-            options={{ headerShown: false }}
+            options={({ route }) => ({ title: route.params.titulo })}
           />
         </Stack.Navigator>
       </SafeAreaView>

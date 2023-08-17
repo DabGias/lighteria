@@ -1,21 +1,24 @@
-import { Text, Pressable, StyleSheet, SafeAreaView } from "react-native"
+import { Text, StyleSheet, SafeAreaView, View, Image } from "react-native"
 
-export const ProductDetail = ({navigation}) => {
+export const ProductDetail = ({ route }) => {
+    const { imagem, estudio, itemName, preco, itemDesc } = route.params
+
     return (
-      <SafeAreaView style={styles.container}>
-        <Pressable onPress={() => {navigation.navigate("ListaProdutos")}}>
-            <Text style={styles.text}>Lista de DetalhesProduto</Text>
-        </Pressable>
-      </SafeAreaView>
+        <SafeAreaView style={styles.container}>
+            <Image source={{ uri: imagem }} style={{ width: 200, height: 200 }}/>
+            <Text style={{ textAlign: "center", fontSize: 40 }}>{itemName}</Text>
+            <Text style={{ textAlign: "center", fontSize: 20 }}>{estudio}</Text>
+            <View style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: 20 }}>
+                <Text style={{ textAlign: "center", fontSize: 18 }}>Preço: {preco.toLocaleString('pt-br', { style: "currency", currency: 'BRL' })}</Text>
+                <Text style={{ textAlign: "center", fontSize: 18 }}>Sobre: {itemDesc}</Text>
+            </View>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-
-    text: {
-        fontSize: 40
+        backgroundColor: "#fff"
     }
 })
