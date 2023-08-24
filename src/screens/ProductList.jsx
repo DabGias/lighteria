@@ -3,19 +3,19 @@ import { Text, Pressable, SafeAreaView, Image, FlatList } from "react-native"
 import { Header } from "../components/Header"
 import { useEffect, useState } from "react"
 
-async function addProdt(item) {
-    if (await AsyncStorage.getItem("prodts") === null) {
-        await AsyncStorage.setItem("prodts", JSON.stringify([]))
-    } 
-   
-    const prodts = JSON.parse(await AsyncStorage.getItem("prodts"))
-
-    prodts.push(item)
-
-    await AsyncStorage.setItem("prodts", JSON.stringify(prodts))
-}
-
 function Item({ navigation, titulo, imagem, estudio, itemName, preco, itemDesc }) {
+    async function addProdt(item) {
+        if (await AsyncStorage.getItem("prodts") === null) {
+            await AsyncStorage.setItem("prodts", JSON.stringify([]))
+        } 
+       
+        const prodts = JSON.parse(await AsyncStorage.getItem("prodts"))
+    
+        prodts.push(item)
+    
+        await AsyncStorage.setItem("prodts", JSON.stringify(prodts))
+    }
+
     return(
         <Pressable style={{ flex: 1/2, padding: 15, margin: 10, backgroundColor: "#ddd", borderRadius: 15 }} 
         onPress={() => { 
