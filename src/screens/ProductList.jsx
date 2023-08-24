@@ -1,13 +1,28 @@
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Text, Pressable, SafeAreaView, Image, FlatList } from "react-native"
 import { Header } from "../components/Header"
 import { useEffect, useState } from "react"
 
-function Item({ navigation, titulo, imagem, estudio, itemName, preco, itemDesc }) {
-    console.debug(imagem)
+async function addProdt(item) {
+    if (await AsyncStorage.getItem("prodts") === null) {
+        await AsyncStorage.setItem("prodts", JSON.stringify([]))
+    } 
+   
+    const prodts = JSON.parse(await AsyncStorage.getItem("prodts"))
 
+    prodts.push(item)
+
+    await AsyncStorage.setItem("prodts", JSON.stringify(prodts))
+}
+
+function Item({ navigation, titulo, imagem, estudio, itemName, preco, itemDesc }) {
     return(
-        <Pressable style={{ flex: 1/2, padding: 15, margin: 10, backgroundColor: "#ddd", borderRadius: 15 }} onPress={() => { navigation.navigate("DetalheProduto", { titulo, imagem, estudio, itemName, preco, itemDesc }) }}>
-            <Image source={{ uri: imagem }} style={{ width: 200, height: 200 }}/>
+        <Pressable style={{ flex: 1/2, padding: 15, margin: 10, backgroundColor: "#ddd", borderRadius: 15 }} 
+        onPress={() => { 
+            addProdt({ titulo, estudio, itemName, preco })
+            navigation.navigate("DetalheProduto", { titulo, imagem, estudio, itemName, preco, itemDesc }) 
+        }}>
+            <Image source={{ uri: imagem }} style={{ width: "100%", height: 200 }}/>
             <Text style={{ textAlign: "center" }}>{titulo}</Text>
             <Text>{itemName}</Text>
             <Text>{preco.toLocaleString('pt-br', { style: "currency", currency: 'BRL' })}</Text>
@@ -17,6 +32,7 @@ function Item({ navigation, titulo, imagem, estudio, itemName, preco, itemDesc }
 
 export const ProductList = ({ navigation }) => {
     const [data, setData] = useState([])
+    const [asyncValue, setAsyncValue] = useState([])
 
     useEffect(() => {
         getData()
@@ -28,9 +44,19 @@ export const ProductList = ({ navigation }) => {
         .then((json) => { setData(json) })
     }
 
+    async function getItem(itemName) {
+        setAsyncValue(await AsyncStorage.getItem(itemName))
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <Header/>
+            {
+                getItem("prodts") === null ?
+                    null
+                :
+                    <Text>{asyncValue}</Text>
+            }
             <FlatList 
                 data={data} 
                 keyExtractor={item => item.id} 
