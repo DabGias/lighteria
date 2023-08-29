@@ -5,7 +5,7 @@ export const ProductDetail = ({ route }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Image source={{ uri: imagem }} style={{ width: 200, height: 200 }}/>
+            <Image source={{ uri: imagem }} style={{ width: "100%", height: 200, resizeMode: "center" }}/>
             <Text style={{ textAlign: "center", fontSize: 40 }}>{itemName}</Text>
             <Text style={{ textAlign: "center", fontSize: 20 }}>{estudio}</Text>
             <View style={{ width: "80%", marginLeft: "auto", marginRight: "auto", marginTop: 20 }}>
